@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveEasy - Premium Car Rentals</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    DriveEasy
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="home">
+                            <i class="fas fa-home"></i> Home
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-page="cars">
+                            <i class="fas fa-car-side"></i> Cars
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-page="booking">
+                            <i class="fas fa-calendar-check"></i> Booking
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-page="contact">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <!-- Home Page -->
+        <div id="home" class="page-section active">
+            <section class="hero">
+                <div class="container">
+                    <h1><i class="fas fa-star"></i> Premium Car Rentals</h1>
+                    <p>Experience luxury and comfort with our premium fleet of vehicles across South Africa</p>
+                    
+                    <div class="search-bar">
+                        <div class="search-group">
+                            <label for="pickup-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Pickup Location
+                            </label>
+                            <select id="pickup-location">
+                                <option>Johannesburg, GP</option>
+                                <option>Cape Town, WC</option>
+                                <option>Durban, KZN</option>
+                                <option>Pretoria, GP</option>
+                                <option>Port Elizabeth, EC</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <label for="pickup-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                Pickup Date
+                            </label>
+                            <input type="date" id="pickup-date">
+                        </div>
+                        <div class="search-group">
+                            <label for="return-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                Return Date
+                            </label>
+                            <input type="date" id="return-date">
+                        </div>
+                        <button class="search-btn" onclick="searchCars()">
+                            <i class="fas fa-search"></i>
+                            Search Cars
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="container">
+                <h2 class="section-title">Featured Vehicles</h2>
+                <div class="loading" id="home-loading">
+                    <div class="spinner"></div>
+                    <p>Loading featured cars...</p>
+                </div>
+                <div class="cars-grid" id="featured-cars"></div>
+            </section>
+        </div>
+
+        <!-- Cars Page -->
+        <div id="cars" class="page-section">
+            <div class="container">
+                <h2 class="section-title">Our Premium Fleet</h2>
+                
+                <div class="filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="car-type">
+                                <i class="fas fa-car"></i>
+                                Car Type
+                            </label>
+                            <select id="car-type" onchange="filterCars()">
+                                <option value="all">All Types</option>
+                                <option value="economy">Economy</option>
+                                <option value="compact">Compact</option>
+                                <option value="suv">SUV</option>
+                                <option value="luxury">Luxury</option>
+                                <option value="sports">Sports</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="price-range">
+                                <i class="fas fa-coins"></i>
+                                Price Range (ZAR)
+                            </label>
+                            <select id="price-range" onchange="filterCars()">
+                                <option value="all">All Prices</option>
+                                <option value="0-800">R0 - R800</option>
+                                <option value="800-1500">R800 - R1,500</option>
+                                <option value="1500-3000">R1,500 - R3,000</option>
+                                <option value="3000+">R3,000+</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="transmission">
+                                <i class="fas fa-cogs"></i>
+                                Transmission
+                            </label>
+                            <select id="transmission" onchange="filterCars()">
+                                <option value="all">All Types</option>
+                                <option value="automatic">Automatic</option>
+                                <option value="manual">Manual</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="seats">
+                                <i class="fas fa-users"></i>
+                                Seats
+                            </label>
+                            <select id="seats" onchange="filterCars()">
+                                <option value="all">Any</option>
+                                <option value="2">2 Seats</option>
+                                <option value="4">4 Seats</option>
+                                <option value="5">5 Seats</option>
+                                <option value="7">7+ Seats</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="loading" id="cars-loading">
+                    <div class="spinner"></div>
+                    <p>Loading cars...</p>
+                </div>
+                <div class="cars-grid" id="all-cars"></div>
+            </div>
+        </div>
+
+        <!-- Booking Page -->
+        <div id="booking" class="page-section">
+            <div class="container">
+                <h2 class="section-title">Book Your Perfect Car</h2>
+                
+                <form class="booking-form" onsubmit="submitBooking(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name">
+                                <i class="fas fa-user"></i>
+                                First Name
+                            </label>
+                            <input type="text" id="first-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">
+                                <i class="fas fa-user"></i>
+                                Last Name
+                            </label>
+                            <input type="text" id="last-name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i>
+                            Phone Number
+                        </label>
+                        <input type="tel" id="phone" required placeholder="+27 XX XXX XXXX">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pickup-date-booking">
+                                <i class="fas fa-calendar-alt"></i>
+                                Pickup Date
+                            </label>
+                            <input type="date" id="pickup-date-booking" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="return-date-booking">
+                                <i class="fas fa-calendar-alt"></i>
+                                Return Date
+                            </label>
+                            <input type="date" id="return-date-booking" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="car-selection">
+                            <i class="fas fa-car-side"></i>
+                            Selected Car
+                        </label>
+                        <select id="car-selection" required>
+                            <option value="">Choose a car</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="special-requests">
+                            <i class="fas fa-clipboard-list"></i>
+                            Special Requests
+                        </label>
+                        <textarea id="special-requests" rows="4" placeholder="Any special requirements or requests..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-check-circle"></i>
+                        Complete Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page-section">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                
+                <div style="max-width: 700px; margin: 0 auto; background: white; padding: 3rem; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div style="text-align: center; margin-bottom: 3rem;">
+                        <h3 style="color: #1f2937; margin-bottom: 1rem; font-size: 2rem; font-weight: 800;">We're Here to Help</h3>
+                        <p style="color: #6b7280; font-size: 1.1rem;">Have questions about our premium car rental services? We'd love to hear from you!</p>
+                    </div>
+                    
+                    <div style="display: grid; gap: 2rem; margin-bottom: 3rem;">
+                        <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #667eea10, #764ba210); border-radius: 16px; border: 1px solid #e5e7eb;">
+                            <i class="fas fa-phone-alt" style="font-size: 2.5rem; color: #667eea; margin-bottom: 1rem;"></i>
+                            <div style="font-weight: 700; color: #1f2937; font-size: 1.1rem; margin-bottom: 0.5rem;">Phone</div>
+                            <p style="color: #6b7280;">+27 11 123 4567</p>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #667eea10, #764ba210); border-radius: 16px; border: 1px solid #e5e7eb;">
+                            <i class="fas fa-envelope" style="font-size: 2.5rem; color: #667eea; margin-bottom: 1rem;"></i>
+                            <div style="font-weight: 700; color: #1f2937; font-size: 1.1rem; margin-bottom: 0.5rem;">Email</div>
+                            <p style="color: #6b7280;">info@driveeasy.co.za</p>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #667eea10, #764ba210); border-radius: 16px; border: 1px solid #e5e7eb;">
+                            <i class="fas fa-map-marker-alt" style="font-size: 2.5rem; color: #667eea; margin-bottom: 1rem;"></i>
+                            <div style="font-weight: 700; color: #1f2937; font-size: 1.1rem; margin-bottom: 0.5rem;">Address</div>
+                            <p style="color: #6b7280;">123 Nelson Mandela Square, Sandton, GP 2196</p>
+                        </div>
+                    </div>
+                    
+                    <form onsubmit="submitContact(event)">
+                        <div class="form-group">
+                            <label for="contact-name">
+                                <i class="fas fa-user"></i>
+                                Name
+                            </label>
+                            <input type="text" id="contact-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">
+                                <i class="fas fa-envelope"></i>
+                                Email
+                            </label>
+                            <input type="email" id="contact-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">
+                                <i class="fas fa-comment-alt"></i>
+                                Message
+                            </label>
+                            <textarea id="contact-message" rows="5" required placeholder="How can we help you today?"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Car Detail Modal -->
+    <div id="car-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-car-name" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800;">
+                    <i class="fas fa-car"></i>
+                    Car Details
+                </h2>
+                <button class="close-modal" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #667eea10, #764ba210); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 5rem; margin-bottom: 2rem; border: 1px solid #e5e7eb;" id="modal-car-image">🚗</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;" id="modal-specs"></div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <div id="modal-price" style="font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <span class="currency" style="font-size: 1.5rem; color: #6b7280;">R</span>
+                    </div>
+                    <button class="rent-btn" onclick="bookCar()" style="max-width: 300px; margin: 0 auto;">
+                        <i class="fas fa-calendar-check"></i>
+                        Book This Car
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
