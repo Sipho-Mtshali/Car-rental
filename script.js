@@ -1,3 +1,25 @@
+ // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDS2bs8fcvKO3YPXlMICgzFUYFgwUNB600",
+  authDomain: "carsrental-b7662.firebaseapp.com",
+  projectId: "carsrental-b7662",
+  storageBucket: "carsrental-b7662.firebasestorage.app",
+  messagingSenderId: "53388993547",
+  appId: "1:53388993547:web:7dd036d9e83b5d7c1e130e",
+  measurementId: "G-P14PDHTWNP"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
  // Car data with South African Rand prices
         const carsData = [
             {
