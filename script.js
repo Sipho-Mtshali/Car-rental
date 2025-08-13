@@ -9,7 +9,7 @@
                 fuel: "Petrol",
                 engine: "2.5L 4-Cylinder",
                 mileage: "6.8L/100km",
-                image: "https://i.postimg.cc/3RcqZqN4/1-Tesla-Model-S.jpg",
+                image: "https://i.postimg.cc/yYj1zFff/camry.jpg",
                 features: ["Air Conditioning", "Bluetooth", "USB Ports", "Reverse Camera"],
                 available: true
             },
@@ -93,7 +93,7 @@
                 fuel: "Petrol",
                 engine: "2.5L 4-Cylinder",
                 mileage: "6.8L/100km",
-                image: "https://i.postimg.cc/9Qdvj18K/day-exterior-04-040.png",
+                image: "https://i.postimg.cc/507p8KpH/nissan.jpg",
                 features: ["Safety Shield", "Remote Start", "Heated Seats", "Blind Spot Monitor"],
                 available: true
             },
@@ -121,7 +121,7 @@
                 fuel: "Petrol",
                 engine: "3.0L Turbo V6",
                 mileage: "8.5L/100km",
-                image: "https://i.postimg.cc/cJdP1YPH/BMW-X5.jpg",
+                image: "https://i.postimg.cc/rwDT47J4/Benz.jpg",
                 features: ["MBUX Infotainment", "Air Suspension", "360° Camera", "Premium Audio"],
                 available: true
             },
@@ -135,7 +135,7 @@
                 fuel: "Petrol",
                 engine: "1.4L 4-Cylinder",
                 mileage: "5.8L/100km",
-                image: "https://i.postimg.cc/Y0LsDxLX/Honda-Civic.jpg",
+                image: "https://i.postimg.cc/vBrbB9vS/polo.jpg",
                 features: ["Air Conditioning", "Bluetooth", "Central Locking", "Electric Windows"],
                 available: true
             }
