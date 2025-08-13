@@ -1,5 +1,3 @@
-
-        // Car data with South African Rand prices
         const carsData = [
             {
                 id: 1,
@@ -11,7 +9,7 @@
                 fuel: "Petrol",
                 engine: "2.5L 4-Cylinder",
                 mileage: "6.8L/100km",
-                image: "🚗",
+                image: "https://i.postimg.cc/3RcqZqN4/1-Tesla-Model-S.jpg",
                 features: ["Air Conditioning", "Bluetooth", "USB Ports", "Reverse Camera"],
                 available: true
             },
@@ -25,7 +23,7 @@
                 fuel: "Petrol",
                 engine: "2.0L 4-Cylinder",
                 mileage: "6.2L/100km",
-                image: "🚙",
+                image: "https://i.postimg.cc/Y0LsDxLX/Honda-Civic.jpg",
                 features: ["Air Conditioning", "Bluetooth", "Lane Assist", "Apple CarPlay"],
                 available: true
             },
@@ -39,7 +37,7 @@
                 fuel: "Petrol",
                 engine: "3.0L Turbo V6",
                 mileage: "8.9L/100km",
-                image: "🚙",
+                image: "https://i.postimg.cc/cJdP1YPH/BMW-X5.jpg",
                 features: ["Leather Seats", "Panoramic Roof", "Navigation", "Premium Sound"],
                 available: true
             },
@@ -53,7 +51,7 @@
                 fuel: "Petrol",
                 engine: "5.0L V8",
                 mileage: "12.4L/100km",
-                image: "🏎️",
+                image: "https://i.postimg.cc/cJT2vCNc/ford-mustang.jpg",
                 features: ["Performance Package", "Sport Exhaust", "Racing Stripes", "Premium Interior"],
                 available: true
             },
@@ -67,7 +65,7 @@
                 fuel: "Petrol",
                 engine: "5.3L V8",
                 mileage: "11.8L/100km",
-                image: "🚛",
+                image: "https://i.postimg.cc/G22NGRLn/inkas-armored-chevrolet-suburban-hero-social.webp",
                 features: ["3rd Row Seating", "Towing Package", "Rear Entertainment", "4WD"],
                 available: true
             },
@@ -81,7 +79,7 @@
                 fuel: "Electric",
                 engine: "Dual Motor",
                 mileage: "650km Range",
-                image: "⚡",
+                image: "https://i.postimg.cc/c6q5p8Qd/tesla-s.avif",
                 features: ["Autopilot", "Supercharging", "Premium Interior", "Glass Roof"],
                 available: true
             },
@@ -95,7 +93,7 @@
                 fuel: "Petrol",
                 engine: "2.5L 4-Cylinder",
                 mileage: "6.8L/100km",
-                image: "🚗",
+                image: "https://i.postimg.cc/9Qdvj18K/day-exterior-04-040.png",
                 features: ["Safety Shield", "Remote Start", "Heated Seats", "Blind Spot Monitor"],
                 available: true
             },
@@ -109,7 +107,7 @@
                 fuel: "Petrol",
                 engine: "3.0L Twin-Turbo",
                 mileage: "9.1L/100km",
-                image: "🏁",
+                image: "https://i.postimg.cc/cJT2vCNc/ford-mustang.jpg",
                 features: ["Sport Chrono", "PASM", "Carbon Fiber", "Track Package"],
                 available: true
             },
@@ -123,7 +121,7 @@
                 fuel: "Petrol",
                 engine: "3.0L Turbo V6",
                 mileage: "8.5L/100km",
-                image: "🚙",
+                image: "https://i.postimg.cc/cJdP1YPH/BMW-X5.jpg",
                 features: ["MBUX Infotainment", "Air Suspension", "360° Camera", "Premium Audio"],
                 available: true
             },
@@ -137,7 +135,7 @@
                 fuel: "Petrol",
                 engine: "1.4L 4-Cylinder",
                 mileage: "5.8L/100km",
-                image: "🚗",
+                image: "https://i.postimg.cc/Y0LsDxLX/Honda-Civic.jpg",
                 features: ["Air Conditioning", "Bluetooth", "Central Locking", "Electric Windows"],
                 available: true
             }
@@ -198,7 +196,7 @@
             document.getElementById(pageId).classList.add('active');
         }
 
-        // Display cars with enhanced styling
+        // Display cars with real images
         function displayCars(containerId, carsToShow) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
@@ -212,7 +210,10 @@
                 const fuelIcon = car.fuel === 'Electric' ? 'fas fa-bolt' : 'fas fa-gas-pump';
 
                 carCard.innerHTML = `
-                    <div class="car-image">${car.image}</div>
+                    <div class="car-image">
+                        <img src="${car.image}" alt="${car.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 4rem; color: #6b7280;">🚗</div>
+                    </div>
                     <div class="car-details">
                         <div class="car-name">
                             <i class="fas fa-star"></i>
@@ -248,14 +249,22 @@
             });
         }
 
-        // Show car details in enhanced modal
+        // Show car details in modal with real image
         function showCarDetails(car) {
             selectedCarId = car.id;
             document.getElementById('modal-car-name').innerHTML = `
                 <i class="fas fa-car"></i>
                 ${car.name}
             `;
-            document.getElementById('modal-car-image').textContent = car.image;
+            
+            const modalImage = document.getElementById('modal-car-image').querySelector('img');
+            modalImage.src = car.image;
+            modalImage.alt = car.name;
+            modalImage.onerror = function() {
+                this.style.display = 'none';
+                this.parentElement.innerHTML = '<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 5rem; color: #6b7280;">🚗</div>';
+            };
+            
             document.getElementById('modal-price').innerHTML = `
                 <span class="currency">R</span>${car.price.toLocaleString()}<span style="font-size: 1.2rem; color: #6b7280;">/day</span>
             `;
@@ -266,7 +275,7 @@
                 { label: 'Seats', value: car.seats, icon: 'fas fa-users' },
                 { label: 'Transmission', value: car.transmission.charAt(0).toUpperCase() + car.transmission.slice(1), icon: car.transmission === 'automatic' ? 'fas fa-cog' : 'fas fa-cogs' },
                 { label: 'Fuel Type', value: car.fuel, icon: car.fuel === 'Electric' ? 'fas fa-bolt' : 'fas fa-gas-pump' },
-                { label: 'Engine', value: car.engine, icon: 'fas fa-engine' },
+                { label: 'Engine', value: car.engine, icon: 'fas fa-tachometer-alt' },
                 { label: 'Efficiency', value: car.mileage, icon: 'fas fa-leaf' }
             ];
 
@@ -394,7 +403,7 @@
             displayCars('all-cars', filteredCars);
         }
 
-        // Enhanced booking form submission with Firebase
+        // Enhanced booking form submission
         async function submitBooking(event) {
             event.preventDefault();
             
@@ -418,11 +427,9 @@
                     status: 'pending'
                 };
 
-                // Save to Firebase if available
-                if (window.firebase && window.firebase.db) {
-                    await window.firebase.addDoc(window.firebase.collection(window.firebase.db, 'bookings'), formData);
-                    console.log('Booking saved to Firebase!');
-                }
+                // Save to Firebase
+                const docRef = await window.firebase.addDoc(window.firebase.collection(window.firebase.db, 'bookings'), formData);
+                console.log('Booking saved with ID:', docRef.id);
 
                 showMessage('Booking submitted successfully! We will contact you shortly to confirm your reservation.', 'success');
                 event.target.reset();
@@ -431,53 +438,50 @@
                 
             } catch (error) {
                 console.error('Error submitting booking:', error);
-                showMessage('Booking submitted successfully! We will contact you shortly to confirm your reservation.', 'success');
-                event.target.reset();
-                selectedCarId = null;
-                setDefaultDates();
+                showMessage('There was an error submitting your booking. Please try again.', 'error');
             } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         }
 
-        // Enhanced contact form submission with Firebase
+        // Enhanced contact form submission
         async function submitContact(event) {
-            event.preventDefault();
+        event.preventDefault();
+        console.log('Contact form submitted!'); // Debug line
+        
+        const submitBtn = event.target.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitBtn.disabled = true;
+
+        try {
+            // Get form data
+            const formData = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                message: document.getElementById('contact-message').value,
+                timestamp: new Date(),
+                status: 'new'
+            };
+
+            console.log('Contact form data:', formData); // Debug line
+
+            // Save to Firebase
+            const docRef = await window.firebase.addDoc(window.firebase.collection(window.firebase.db, 'contacts'), formData);
+            console.log('Contact message saved with ID:', docRef.id);
+
+            showMessage('Message sent successfully! We will get back to you within 24 hours.', 'success');
+            event.target.reset();
             
-            const submitBtn = event.target.querySelector('.submit-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            submitBtn.disabled = true;
-
-            try {
-                // Get form data
-                const formData = {
-                    name: document.getElementById('contact-name').value,
-                    email: document.getElementById('contact-email').value,
-                    message: document.getElementById('contact-message').value,
-                    timestamp: new Date(),
-                    status: 'new'
-                };
-
-                // Save to Firebase if available
-                if (window.firebase && window.firebase.db) {
-                    await window.firebase.addDoc(window.firebase.collection(window.firebase.db, 'contacts'), formData);
-                    console.log('Contact message saved to Firebase!');
-                }
-
-                showMessage('Message sent successfully! We will get back to you within 24 hours.', 'success');
-                event.target.reset();
-                
-            } catch (error) {
-                console.error('Error submitting contact form:', error);
-                showMessage('Message sent successfully! We will get back to you within 24 hours.', 'success');
-                event.target.reset();
-            } finally {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
+        } catch (error) {
+            console.error('Error submitting contact form:', error);
+            showMessage('There was an error sending your message. Please try again.', 'error');
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
         }
+    }
 
         // Show success/error messages
         function showMessage(message, type) {
@@ -552,36 +556,6 @@
                 e.target.style.boxShadow = 'none';
             }
         });
-
-        // Test Firebase connection function
-        window.testFirebaseConnection = async function() {
-            try {
-                if (!window.firebase || !window.firebase.db) {
-                    throw new Error('Firebase not initialized');
-                }
-
-                // Test data
-                const testData = {
-                    test: true,
-                    timestamp: new Date(),
-                    message: 'Firebase connection test'
-                };
-
-                // Try to add a document
-                const docRef = await window.firebase.addDoc(
-                    window.firebase.collection(window.firebase.db, 'test'), 
-                    testData
-                );
-                
-                console.log('Firebase test successful! Document ID:', docRef.id);
-                showMessage('Firebase connection successful!', 'success');
-                return true;
-            } catch (error) {
-                console.error('Firebase test failed:', error);
-                showMessage('Firebase connection failed: ' + error.message, 'error');
-                return false;
-            }
-        };
 
         console.log('Car rental website loaded successfully!');
         console.log('Firebase integration ready. Use testFirebaseConnection() to test the connection.');

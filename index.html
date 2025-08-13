@@ -225,7 +225,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="special-requests" class="required">
+                        <label for="special-requests">
                             <i class="fas fa-clipboard-list"></i>
                             Special Requests
                         </label>
@@ -245,7 +245,7 @@
             <div class="container">
                 <h2 class="section-title">Get In Touch</h2>
                 
-                <div style="max-width: 700px; margin: 0 auto; background: white; padding: 3rem; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.2);">
+                <div style="max-width: 700px; margin: 0 auto; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 3rem; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.2);">
                     <div style="text-align: center; margin-bottom: 3rem;">
                         <h3 style="color: #1f2937; margin-bottom: 1rem; font-size: 2rem; font-weight: 800;">We're Here to Help</h3>
                         <p style="color: #6b7280; font-size: 1.1rem;">Have questions about our premium car rental services? We'd love to hear from you!</p>
@@ -314,7 +314,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #667eea10, #764ba210); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 5rem; margin-bottom: 2rem; border: 1px solid #e5e7eb;" id="modal-car-image">🚗</div>
+                <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #f8fafc, #e2e8f0); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; border: 1px solid #e5e7eb; overflow: hidden;" id="modal-car-image">
+                    <img src="" alt="Car Image" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;" id="modal-specs"></div>
                 <div style="text-align: center; margin-top: 2rem;">
                     <div id="modal-price" style="font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
