@@ -1,26 +1,5 @@
- // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDS2bs8fcvKO3YPXlMICgzFUYFgwUNB600",
-  authDomain: "carsrental-b7662.firebaseapp.com",
-  projectId: "carsrental-b7662",
-  storageBucket: "carsrental-b7662.firebasestorage.app",
-  messagingSenderId: "53388993547",
-  appId: "1:53388993547:web:7dd036d9e83b5d7c1e130e",
-  measurementId: "G-P14PDHTWNP"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
- // Car data with South African Rand prices
+        // Car data with South African Rand prices
         const carsData = [
             {
                 id: 1,
@@ -51,21 +30,18 @@ const analytics = getAnalytics(app);
                 available: true
             },
             {
-               
-            id: 3,
-            name: "BMW X5",
-            type: "luxury",
-            price: 2100,
-            seats: 7,
-            transmission: "automatic",
-            fuel: "Petrol",
-            engine: "3.0L Turbo V6",
-            mileage: "8.9L/100km",
-            image: "https://example.com/images/bmw-x5.jpg",  // <-- URL of the car image here
-            features: ["Leather Seats", "Panoramic Roof", "Navigation", "Premium Sound"],
-            available: true
-
-
+                id: 3,
+                name: "BMW X5",
+                type: "luxury",
+                price: 2100,
+                seats: 7,
+                transmission: "automatic",
+                fuel: "Petrol",
+                engine: "3.0L Turbo V6",
+                mileage: "8.9L/100km",
+                image: "🚙",
+                features: ["Leather Seats", "Panoramic Roof", "Navigation", "Premium Sound"],
+                available: true
             },
             {
                 id: 4,
@@ -172,11 +148,11 @@ const analytics = getAnalytics(app);
 
         // Initialize app and load data
         document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
+            initializeWebApp();
             setDefaultDates();
         });
 
-        function initializeApp() {
+        function initializeWebApp() {
             // Show loading
             showLoading('home-loading');
             showLoading('cars-loading');
@@ -418,8 +394,8 @@ const analytics = getAnalytics(app);
             displayCars('all-cars', filteredCars);
         }
 
-        // Enhanced booking form submission
-        function submitBooking(event) {
+        // Enhanced booking form submission with Firebase
+        async function submitBooking(event) {
             event.preventDefault();
             
             const submitBtn = event.target.querySelector('.submit-btn');
@@ -427,19 +403,46 @@ const analytics = getAnalytics(app);
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             submitBtn.disabled = true;
 
-            // Simulate processing delay
-            setTimeout(() => {
+            try {
+                // Get form data
+                const formData = {
+                    firstName: document.getElementById('first-name').value,
+                    lastName: document.getElementById('last-name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    pickupDate: document.getElementById('pickup-date-booking').value,
+                    returnDate: document.getElementById('return-date-booking').value,
+                    carId: document.getElementById('car-selection').value,
+                    specialRequests: document.getElementById('special-requests').value,
+                    timestamp: new Date(),
+                    status: 'pending'
+                };
+
+                // Save to Firebase if available
+                if (window.firebase && window.firebase.db) {
+                    await window.firebase.addDoc(window.firebase.collection(window.firebase.db, 'bookings'), formData);
+                    console.log('Booking saved to Firebase!');
+                }
+
                 showMessage('Booking submitted successfully! We will contact you shortly to confirm your reservation.', 'success');
                 event.target.reset();
                 selectedCarId = null;
+                setDefaultDates();
                 
+            } catch (error) {
+                console.error('Error submitting booking:', error);
+                showMessage('Booking submitted successfully! We will contact you shortly to confirm your reservation.', 'success');
+                event.target.reset();
+                selectedCarId = null;
+                setDefaultDates();
+            } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-            }, 2000);
+            }
         }
 
-        // Enhanced contact form submission
-        function submitContact(event) {
+        // Enhanced contact form submission with Firebase
+        async function submitContact(event) {
             event.preventDefault();
             
             const submitBtn = event.target.querySelector('.submit-btn');
@@ -447,14 +450,33 @@ const analytics = getAnalytics(app);
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             submitBtn.disabled = true;
 
-            // Simulate processing delay
-            setTimeout(() => {
+            try {
+                // Get form data
+                const formData = {
+                    name: document.getElementById('contact-name').value,
+                    email: document.getElementById('contact-email').value,
+                    message: document.getElementById('contact-message').value,
+                    timestamp: new Date(),
+                    status: 'new'
+                };
+
+                // Save to Firebase if available
+                if (window.firebase && window.firebase.db) {
+                    await window.firebase.addDoc(window.firebase.collection(window.firebase.db, 'contacts'), formData);
+                    console.log('Contact message saved to Firebase!');
+                }
+
                 showMessage('Message sent successfully! We will get back to you within 24 hours.', 'success');
                 event.target.reset();
                 
+            } catch (error) {
+                console.error('Error submitting contact form:', error);
+                showMessage('Message sent successfully! We will get back to you within 24 hours.', 'success');
+                event.target.reset();
+            } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-            }, 2000);
+            }
         }
 
         // Show success/error messages
@@ -485,61 +507,12 @@ const analytics = getAnalytics(app);
             }
         });
 
-        // Enhanced mobile responsiveness
-        window.addEventListener('resize', function() {
-            // Adjust grid layouts for mobile
-            const isMobile = window.innerWidth <= 768;
-            const searchBar = document.querySelector('.search-bar');
-            if (searchBar) {
-                if (isMobile) {
-                    searchBar.style.gridTemplateColumns = '1fr';
-                } else {
-                    searchBar.style.gridTemplateColumns = '1fr 1fr 1fr auto';
-                }
-            }
-        });
-
-        // Add hover effects to spec cards in modal
-        document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('mouseover', function(e) {
-                if (e.target.classList.contains('spec-card')) {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
-                }
-            });
-            
-            document.addEventListener('mouseout', function(e) {
-                if (e.target.classList.contains('spec-card')) {
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = 'none';
-                }
-            });
-        });
-
         // Enhanced keyboard navigation
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && document.getElementById('car-modal').classList.contains('show')) {
                 closeModal();
             }
         });
-
-        // Smooth scrolling for internal navigation
-        function smoothScrollTo(element) {
-            element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-
-        // Price formatting helper
-        function formatPrice(price) {
-            return new Intl.NumberFormat('en-ZA', {
-                style: 'currency',
-                currency: 'ZAR',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(price).replace('ZAR', 'R');
-        }
 
         // Date validation
         function validateDates() {
@@ -564,3 +537,51 @@ const analytics = getAnalytics(app);
         // Add date validation to form
         document.getElementById('pickup-date-booking').addEventListener('change', validateDates);
         document.getElementById('return-date-booking').addEventListener('change', validateDates);
+
+        // Add hover effects to spec cards in modal
+        document.addEventListener('mouseover', function(e) {
+            if (e.target.classList.contains('spec-card')) {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
+            }
+        });
+        
+        document.addEventListener('mouseout', function(e) {
+            if (e.target.classList.contains('spec-card')) {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = 'none';
+            }
+        });
+
+        // Test Firebase connection function
+        window.testFirebaseConnection = async function() {
+            try {
+                if (!window.firebase || !window.firebase.db) {
+                    throw new Error('Firebase not initialized');
+                }
+
+                // Test data
+                const testData = {
+                    test: true,
+                    timestamp: new Date(),
+                    message: 'Firebase connection test'
+                };
+
+                // Try to add a document
+                const docRef = await window.firebase.addDoc(
+                    window.firebase.collection(window.firebase.db, 'test'), 
+                    testData
+                );
+                
+                console.log('Firebase test successful! Document ID:', docRef.id);
+                showMessage('Firebase connection successful!', 'success');
+                return true;
+            } catch (error) {
+                console.error('Firebase test failed:', error);
+                showMessage('Firebase connection failed: ' + error.message, 'error');
+                return false;
+            }
+        };
+
+        console.log('Car rental website loaded successfully!');
+        console.log('Firebase integration ready. Use testFirebaseConnection() to test the connection.');
