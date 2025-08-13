@@ -572,34 +572,108 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        /* Mobile Navigation Styles */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    nav ul {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    nav ul li {
+        flex: 0 0 auto;
+    }
+    
+    .nav-link {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1rem !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px) !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        text-decoration: none !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        transition: all 0.3s ease !important;
+        min-width: 70px;
+        text-align: center;
+    }
+    
+    .nav-link i {
+        font-size: 1.2rem !important;
+        margin-bottom: 0.25rem !important;
+        margin-right: 0 !important;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(255, 255, 255, 0.25) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Logo adjustments for mobile */
+    .logo {
+        font-size: 1.5rem !important;
+        text-align: center;
+    }
+    
+    /* Ensure header has proper background on mobile */
+    header {
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
+        padding: 1rem 0 !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+    }
+}
 
-            .search-bar {
-                grid-template-columns: 1fr;
-                padding: 1.5rem;
-            }
-
-            .cars-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .filter-row {
-                grid-template-columns: 1fr;
-            }
-
-            nav ul {
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-        }
+/* For very small screens (phones in portrait) */
+@media (max-width: 480px) {
+    .nav-link {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.75rem !important;
+        min-width: 65px;
+    }
+    
+    .nav-link i {
+        font-size: 1rem !important;
+    }
+    
+    nav ul {
+        gap: 0.4rem;
+    }
+    
+    .logo {
+        font-size: 1.3rem !important;
+    }
+     .section-title {
+        font-size: 2rem;
+    }
+    .filter-row {
+        grid-template-columns: 1fr;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .cars-grid {
+        grid-template-columns: 1fr;
+    }
+    .search-bar {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+     }
+}
