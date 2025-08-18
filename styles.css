@@ -52,6 +52,8 @@
             width: 40px; /* adjust size */
             height: 40px; /* adjust size */
             margin-right: 10px; /* space between logo and text */
+            border-radius: 50%; /* makes it round */
+            object-fit: cover; /* ensures the image covers the circle nicely */
         }
 
 
