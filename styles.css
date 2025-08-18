@@ -40,12 +40,20 @@
 
         .logo {
             font-size: 1.8rem;
-            font-weight: 900;
+            font-weight: bold;
             color: #667eea;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
+  
+
+        .logo-img {
+            width: 40px; /* adjust size */
+            height: 40px; /* adjust size */
+            margin-right: 10px; /* space between logo and text */
+        }
+
 
         nav ul {
             display: flex;
